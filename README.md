@@ -1,4 +1,4 @@
-# moatmat_teacher
+# moatmat_uploader
 
 A new Flutter project.
 

@@ -1,57 +1,71 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:moatmat_uploader/Core/services/folders_s.dart';
+import 'package:moatmat_uploader/Presentation/auth/state/auth_c/auth_cubit_cubit.dart';
+import 'package:moatmat_uploader/Presentation/banks/state/add_bank/add_bank_cubit.dart';
+import 'package:moatmat_uploader/Presentation/banks/state/my_banks/my_banks_cubit.dart';
+import 'package:moatmat_uploader/Presentation/banks/state/search_bank/search_bank_cubit.dart';
+import 'package:moatmat_uploader/Presentation/questions/state/cubit/create_question_cubit.dart';
+import 'package:moatmat_uploader/Presentation/students/state/my_students/my_students_cubit.dart';
+import 'package:moatmat_uploader/Presentation/tests/state/search_test/search_test_cubit.dart';
+import 'package:moatmat_uploader/firebase_options.dart';
+import 'Core/injection/app_inj.dart';
 import 'package:flutter/material.dart';
-import 'package:moatmat_teacher/views/home_v.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'Core/services/supabase_s.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'Presentation/banks/state/bank_information/bank_information_cubit.dart';
+import 'Presentation/banks_results/state/cubit/bank_results_cubit.dart';
+import 'Presentation/folders/state/add_to_folder/add_to_folder_cubit.dart';
+import 'Presentation/folders/state/pick_teacher_item/pick_teacher_item_cubit.dart';
+import 'Presentation/groups/state/groups/students_groups_cubit.dart';
+import 'Presentation/notifications/state/cubit/notifications_cubit.dart';
+import 'Presentation/picker/state/cubit/questions_picker_cubit.dart';
+import 'Presentation/reports/state/reports/reports_cubit.dart';
+import 'Presentation/tests_results/state/cubit/test_results_cubit.dart';
+import 'Presentation/students/state/student/student_cubit.dart';
+import 'Presentation/tests/state/add_test/add_test_cubit.dart';
+import 'Presentation/tests/state/my_tests/my_tests_cubit.dart';
+import 'Presentation/tests/state/test_information/test_information_cubit.dart';
+import 'app_root.dart';
 
 void main() async {
+  //
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(
-    url: "https://kckjiyqmxbrhsrbdlujw.supabase.co",
-    anonKey:
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtja2ppeXFteGJyaHNyYmRsdWp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDY1NTUyNjEsImV4cCI6MjAyMjEzMTI2MX0._Q_LS0jLZEzfBU1atsCkIN-zFjcu0wga9UNep2-K9Lw",
-    debug: false,
+  // int supabase
+  await SupabaseServices.init();
+  //
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff6199DB),
-        ),
-        useMaterial3: true,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff6199DB),
-            fixedSize: Size(
-              MediaQuery.sizeOf(context).width - 16,
-              50,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32),
-              side: const BorderSide(
-                width: 0.5,
-              ),
-            ),
-          ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+  // init get it
+  await initGetIt();
+  //
+  FoldersService.testing();
+  //
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AddTestCubit()),
+        BlocProvider(create: (context) => MyTestsCubit()),
+        BlocProvider(create: (context) => AddBankCubit()),
+        BlocProvider(create: (context) => MyBanksCubit()),
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => ReportsCubit()..init()),
+        BlocProvider(create: (context) => CreateQuestionCubit()),
+        BlocProvider(create: (context) => TestInformationCubit()),
+        BlocProvider(create: (context) => BankInformationCubit()),
+        BlocProvider(create: (context) => TestResultsCubit()),
+        BlocProvider(create: (context) => MyStudentsCubit()),
+        BlocProvider(create: (context) => StudentCubit()),
+        BlocProvider(create: (context) => StudentsGroupsCubit()),
+        BlocProvider(create: (context) => NotificationsCubit()),
+        BlocProvider(create: (context) => BankResultsCubit()),
+        BlocProvider(create: (context) => SearchBankCubit()),
+        BlocProvider(create: (context) => SearchTestCubit()),
+        BlocProvider(create: (context) => QuestionsPickerCubit()),
+        BlocProvider(create: (context) => AddToFolderCubit()),
+        BlocProvider(create: (context) => PickTeacherItemCubit()),
       ],
-      supportedLocales: const [
-        Locale("ar"),
-      ],
-      home: const HomeView(),
-    );
-  }
+      child: const AppRoot(),
+    ),
+  );
 }
