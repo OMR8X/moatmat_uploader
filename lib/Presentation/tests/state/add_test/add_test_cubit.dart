@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:moatmat_uploader/Core/errors/exceptions.dart';
 import 'package:moatmat_uploader/Features/requests/domain/usecases/send_request_uc.dart';
+import 'package:moatmat_uploader/Features/school/domain/usecases/get_school_uc.dart';
 import 'package:moatmat_uploader/Features/tests/domain/entities/test/test.dart';
 import 'package:moatmat_uploader/Features/tests/domain/entities/test/test_information.dart';
 import 'package:moatmat_uploader/Features/tests/domain/entities/test/test_properties.dart';
@@ -12,6 +14,7 @@ import '../../../../Core/injection/app_inj.dart';
 import '../../../../Core/services/questions_cash_s.dart';
 import '../../../../Features/auth/domain/entites/teacher_data.dart';
 import '../../../../Features/requests/domain/entities/request.dart';
+import '../../../../Features/school/domain/entities/school.dart';
 import '../../../../Features/tests/domain/usecases/upload_test_uc.dart';
 
 part 'add_test_state.dart';
@@ -202,8 +205,16 @@ class AddTestCubit extends Cubit<AddTestState> {
   }
 
   // views
-  emitTestInformation() {
-    emit(AddTestInformation(information: information));
+  Future<void> emitTestInformation() async {
+    final response = await locator<GetSchoolUc>().call();
+    response.fold(
+      (l) {
+        emit(AddTestError(exception: AnonException()));
+      },
+      (r) {
+        emit(AddTestInformation(information: information, schools: r));
+      },
+    );
   }
 
   emitTestProperties() {

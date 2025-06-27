@@ -9,6 +9,7 @@ import 'package:moatmat_uploader/Core/widgets/fields/attachment_w.dart';
 import 'package:moatmat_uploader/Core/widgets/fields/drop_down_w.dart';
 import 'package:moatmat_uploader/Core/widgets/fields/elevated_button_widget.dart';
 import 'package:moatmat_uploader/Core/widgets/fields/text_input_field.dart';
+import 'package:moatmat_uploader/Features/school/domain/entities/school.dart';
 
 import '../../../Features/tests/domain/entities/mini_test.dart';
 import '../material_picker_v.dart';
@@ -23,6 +24,8 @@ class SetInformationView extends StatefulWidget {
     this.classs,
     this.material,
     this.teacher,
+    this.schoolId,
+    this.schools,
     this.period,
     this.price,
     this.afterSet,
@@ -38,12 +41,14 @@ class SetInformationView extends StatefulWidget {
   final String? classs;
   final String? material;
   final String? teacher;
+  final String? schoolId;
   final String? password;
   final int? period;
   final int? price;
   final List<String>? images;
   final List<String>? video;
   final List<String>? files;
+  final List<School>? schools;
   final MiniTest? previous;
   final bool isBank;
   //
@@ -52,6 +57,7 @@ class SetInformationView extends StatefulWidget {
     required String classs,
     required String material,
     required String teacher,
+    required String? schoolId,
     required String? password,
     required int? period,
     required int price,
@@ -71,6 +77,7 @@ class _SetInformationViewState extends State<SetInformationView> {
   String? classs;
   String? material;
   String? teacher;
+  String? schoolId;
   String? password;
   int? period;
   int? price;
@@ -86,6 +93,7 @@ class _SetInformationViewState extends State<SetInformationView> {
     classs = widget.classs;
     material = widget.material;
     teacher = widget.teacher;
+    schoolId = widget.schoolId;
     password = widget.password;
     period = widget.period;
     price = widget.price;
@@ -152,6 +160,24 @@ class _SetInformationViewState extends State<SetInformationView> {
                   material = p0;
                 },
               ),
+              if (!widget.isBank && widget.schools?.isNotEmpty != null) ...[
+                const SizedBox(height: SizesResources.s2),
+                DropDownWidget(
+                  hintText: "المدرسة : ",
+                  selectedItem: widget.schools?.where(((e) => e.id.toString() == schoolId)).firstOrNull?.information.name ?? "غير محدد",
+                  items: ["غير محدد"] + widget.schools!.map((e) => e.information.name).toList(),
+                  onChanged: (p0) {
+                    setState(() {
+                      schoolId = widget.schools?.where((e) => e.information.name == p0).firstOrNull?.id.toString();
+                    });
+                  },
+                  onSaved: (p0) {
+                    setState(() {
+                      schoolId = widget.schools?.where((e) => e.information.name == p0).firstOrNull?.id.toString();
+                    });
+                  },
+                ),
+              ],
               const SizedBox(height: SizesResources.s2),
               MyTextFormFieldWidget(
                 hintText: "الاستاذ",
@@ -220,6 +246,7 @@ class _SetInformationViewState extends State<SetInformationView> {
                   price = int.tryParse(p0);
                 },
               ),
+              const SizedBox(height: SizesResources.s2),
               TouchableTileWidget(
                 title: "ارفاق صور",
                 subTitle: "عدد الصور : ${(images ?? []).length}",
@@ -334,6 +361,7 @@ class _SetInformationViewState extends State<SetInformationView> {
                 title: title!,
                 classs: classs!,
                 material: material!,
+                schoolId: schoolId,
                 teacher: teacher!,
                 password: password,
                 period: period,
