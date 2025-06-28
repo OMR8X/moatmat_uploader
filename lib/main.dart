@@ -17,7 +17,7 @@ import 'Presentation/banks_results/state/cubit/bank_results_cubit.dart';
 import 'Presentation/folders/state/add_to_folder/add_to_folder_cubit.dart';
 import 'Presentation/folders/state/pick_teacher_item/pick_teacher_item_cubit.dart';
 import 'Presentation/groups/state/groups/students_groups_cubit.dart';
-import 'Presentation/notifications/state/cubit/notifications_cubit.dart';
+import 'Presentation/notifications2/state/cubit/notifications_cubit.dart';
 import 'Presentation/picker/state/cubit/questions_picker_cubit.dart';
 import 'Presentation/reports/state/reports/reports_cubit.dart';
 import 'Presentation/tests_results/state/cubit/test_results_cubit.dart';

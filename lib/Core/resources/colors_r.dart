@@ -26,4 +26,6 @@ class ColorsResources {
   static const Color homeLocations = Color(0xffF8FDFF);
   //
   static const Color keyboard = Color(0xff151515);
+    static const Color schoolIconBackground = Color(0xffEDE9FE);
+  static const Color textSecondary = Color(0xFF616161); // Colors.grey[700]
 }

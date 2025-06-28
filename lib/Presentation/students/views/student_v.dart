@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moatmat_uploader/Features/notifications/domain/usecases/send_notification_uc.dart';
+import 'package:moatmat_uploader/Features/notifications2/domain/usecases/send_notification_uc.dart';
 import 'package:moatmat_uploader/Features/students/domain/entities/result.dart';
 import 'package:moatmat_uploader/Presentation/groups/state/groups/students_groups_cubit.dart';
 import 'package:moatmat_uploader/Presentation/groups/views/add_to_group_v.dart';
 import 'package:moatmat_uploader/Presentation/groups/views/groups_v.dart';
-import 'package:moatmat_uploader/Presentation/notifications/views/send_notification_v.dart';
+import 'package:moatmat_uploader/Presentation/notifications2/views/send_notification_v.dart';
 import 'package:moatmat_uploader/Presentation/students/state/my_students/my_students_cubit.dart';
 import 'package:moatmat_uploader/Presentation/students/state/student/student_cubit.dart';
 import 'package:moatmat_uploader/Presentation/students/views/student_result_details_v.dart';

@@ -1,4 +1,4 @@
-import 'package:moatmat_uploader/Features/notifications/domain/entities/notification.dart';
+import 'package:moatmat_uploader/Features/notifications2/domain/entities/notification.dart';
 
 class NotificationDataModel extends NotificationData {
   NotificationDataModel({
