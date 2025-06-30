@@ -5,6 +5,7 @@ import 'package:moatmat_uploader/Features/buckets/domain/usecases/delete_test_fi
 import 'package:moatmat_uploader/Features/buckets/domain/usecases/upload_file_uc.dart';
 import 'package:moatmat_uploader/Features/tests/data/models/test_m.dart';
 import 'package:moatmat_uploader/Features/tests/domain/entities/test/test.dart';
+import 'package:moatmat_uploader/Features/tests/domain/entities/video.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/question_m.dart';
@@ -81,7 +82,7 @@ class TestsRemoteDSImpl implements TestsRemoteDS {
     yield "unit";
   }
 
-  Stream<dynamic> uploadTestFile({required Test test}) async* { 
+  Stream<dynamic> uploadTestFile({required Test test}) async* {
     //
     int length = test.questions.length;
     int filesLength = test.information.files?.length ?? 0;
@@ -90,7 +91,7 @@ class TestsRemoteDSImpl implements TestsRemoteDS {
     //
 
     // upload test videos
-    for (int i = 0; i < (newTest.information.video ?? []).length; i++) {
+    for (int i = 0; i < (newTest.information.videos ?? []).length; i++) {
       //
       yield "رفع ملف المقطع رقم (${i + 1}/$filesLength)";
       //
@@ -98,22 +99,23 @@ class TestsRemoteDSImpl implements TestsRemoteDS {
         bucket: "tests",
         material: newTest.information.material,
         id: newTest.id.toString(),
-        path: newTest.information.video![i],
+        path: newTest.information.videos![i].url,
       );
       res.fold(
         (l) {},
         (r) {
           //
-          List<String> newVideos = newTest.information.video ?? [];
+          List<Video> newVideos = newTest.information.videos ?? [];
           //
-          int index = newVideos.indexOf(newTest.information.video![i]);
+          int index = newVideos.indexOf(newTest.information.videos![i]);
           //
-          newVideos[index] = r;
+          // newVideos[index] = r;
+          newVideos[index] = newVideos[index].copyWith(url: r);
           //
           // replace links
           newTest = newTest.copyWith(
             information: newTest.information.copyWith(
-              video: newVideos,
+              videos: newVideos,
             ),
           );
         },

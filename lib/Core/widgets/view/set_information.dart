@@ -10,6 +10,8 @@ import 'package:moatmat_uploader/Core/widgets/fields/drop_down_w.dart';
 import 'package:moatmat_uploader/Core/widgets/fields/elevated_button_widget.dart';
 import 'package:moatmat_uploader/Core/widgets/fields/text_input_field.dart';
 import 'package:moatmat_uploader/Features/school/domain/entities/school.dart';
+import 'package:moatmat_uploader/Features/tests/data/models/video_m.dart';
+import 'package:moatmat_uploader/Features/tests/domain/entities/video.dart';
 
 import '../../../Features/tests/domain/entities/mini_test.dart';
 import '../material_picker_v.dart';
@@ -30,7 +32,7 @@ class SetInformationView extends StatefulWidget {
     this.price,
     this.afterSet,
     this.password,
-    this.video,
+    this.videos,
     this.images,
     this.files,
     this.previous,
@@ -46,7 +48,7 @@ class SetInformationView extends StatefulWidget {
   final int? period;
   final int? price;
   final List<String>? images;
-  final List<String>? video;
+  final List<Video>? videos;
   final List<String>? files;
   final List<School>? schools;
   final MiniTest? previous;
@@ -62,7 +64,7 @@ class SetInformationView extends StatefulWidget {
     required int? period,
     required int price,
     required List<String>? images,
-    required List<String>? video,
+    required List<Video>? videos,
     required List<String>? files,
     MiniTest? previous,
   })? afterSet;
@@ -83,7 +85,7 @@ class _SetInformationViewState extends State<SetInformationView> {
   int? price;
   //
   List<String>? images;
-  List<String>? video;
+  List<Video>? videos;
   List<String>? files;
   MiniTest? previous;
   //
@@ -97,7 +99,7 @@ class _SetInformationViewState extends State<SetInformationView> {
     password = widget.password;
     period = widget.period;
     price = widget.price;
-    video = widget.video;
+    videos = widget.videos;
     images = widget.images;
     files = widget.files;
     previous = widget.previous;
@@ -269,16 +271,16 @@ class _SetInformationViewState extends State<SetInformationView> {
               const SizedBox(height: SizesResources.s2),
               TouchableTileWidget(
                 title: "ارفاق مقاطع فيديو",
-                subTitle: "عدد مقاطع الفيديو : ${(video ?? []).length}",
+                subTitle: "عدد مقاطع الفيديو : ${(videos ?? []).length}",
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => AttachFilesView(
                         type: FileType.video,
-                        assets: video ?? [],
+                        assets: videos?.map((e) => e.url).toList() ?? [],
                         onSave: (res) {
                           setState(() {
-                            video = res;
+                            videos = res.map((e) => VideoModel.fromUrl(e)).toList();
                           });
                         },
                       ),
@@ -366,7 +368,7 @@ class _SetInformationViewState extends State<SetInformationView> {
                 password: password,
                 period: period,
                 price: price!,
-                video: video,
+                videos: videos,
                 files: files,
                 previous: previous,
                 images: images,
