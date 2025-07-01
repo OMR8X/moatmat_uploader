@@ -1,1 +1,1 @@
-final String defaultTopic = 'uploader';
+final String defaultTopic = 'upload';
