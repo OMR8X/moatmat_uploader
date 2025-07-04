@@ -8,7 +8,7 @@ class VideoModel extends Video {
 
   factory VideoModel.fromJson(Map json) {
     return VideoModel(
-      id: json["id"],
+      id: json["id"] ?? 0,
       url: json["url"],
     );
   }

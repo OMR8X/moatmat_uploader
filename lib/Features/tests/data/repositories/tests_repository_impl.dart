@@ -84,7 +84,7 @@ class TestsRepositoryImpl implements TestsRepository {
   }
 
   @override
-  Future<Either<Exception, int>> addVideo({
+  Future<Either<Exception, Video>> addVideo({
     required Video video,
   }) async {
     try {
