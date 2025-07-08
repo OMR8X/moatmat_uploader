@@ -108,28 +108,41 @@ class TestsRemoteDSImpl implements TestsRemoteDS {
         id: newTest.id.toString(),
         path: newTest.information.videos![i].url,
       );
+      //
       if (uploadRes.isLeft()) {
         Fluttertoast.showToast(msg: "حصل خطأ ما اثناء محاولة رفع مقطع الفيديو");
         continue;
       }
-
+      //
       List<Video> newVideos = newTest.information.videos ?? [];
-
+      //
+      final client = Supabase.instance.client;
+      //
       final uploadedUrl = uploadRes.getOrElse(() => "");
-
+      //
       final addedVideoRes = await locator<AddVideoUc>().call(
-        video: VideoModel(id: -1, url: uploadedUrl),
+        video: VideoModel(
+          id: -1,
+          url: uploadedUrl,
+          teacherId: client.auth.currentUser!.id,
+        ),
       );
-
+      //
       if (addedVideoRes.isLeft()) {
         Fluttertoast.showToast(msg: "حصل خطأ ما اثناء محاولة حفظ الفيديو");
         continue;
       }
-
-      final video = addedVideoRes.getOrElse(() => Video(id: -1, url: ""));
-
+      //
+      final video = addedVideoRes.getOrElse(
+        () => Video(
+          id: -1,
+          url: "",
+          teacherId: client.auth.currentUser!.id,
+        ),
+      );
+      //
       newVideos[i] = video;
-
+      //
       newTest = newTest.copyWith(
         information: newTest.information.copyWith(videos: newVideos),
       );
