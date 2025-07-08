@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:moatmat_uploader/Core/injection/app_inj.dart';
 import 'package:moatmat_uploader/Core/widgets/toucheable_tile_widget.dart';
+import 'package:moatmat_uploader/Presentation/notifications/state/notifications_bloc/notifications_bloc.dart';
+import 'package:moatmat_uploader/Presentation/notifications/views/notifications_view.dart';
 
-import '../../../Core/resources/colors_r.dart';
-import '../../../Core/resources/shadows_r.dart';
 import '../../../Core/resources/sizes_resources.dart';
 import '../../../Core/resources/spacing_resources.dart';
 import '../../../Core/resources/texts_resources.dart';
@@ -13,7 +15,7 @@ class MaterialPickerView extends StatefulWidget {
   const MaterialPickerView({
     super.key,
     required this.onPick,
-     this.onSearch,
+    this.onSearch,
   });
   final Function(String) onPick;
   final Function(String)? onSearch;
@@ -29,10 +31,33 @@ class _MaterialPickerViewState extends State<MaterialPickerView> {
       appBar: AppBar(
         title: const Text(AppBarTitles.materialPicker),
         actions: [
-          if(widget.onSearch!=null)
-          SearchIconWidget(
-            onSearch: widget.onSearch!,
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const NotificationsView(),
+                ),
+              );
+            },
+            icon: const Stack(
+              children: [
+                Icon(
+                  Icons.notifications,
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: CircleAvatar(
+                    radius: 3,
+                    backgroundColor: Colors.transparent,
+                  ),
+                )
+              ],
+            ),
           ),
+          if (widget.onSearch != null)
+            SearchIconWidget(
+              onSearch: widget.onSearch!,
+            ),
         ],
       ),
       body: ListView.builder(

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moatmat_uploader/Core/functions/show_alert.dart';
 import 'package:moatmat_uploader/Features/groups/domain/entities/group.dart';
 import 'package:moatmat_uploader/Features/groups/domain/entities/group_item.dart';
-import 'package:moatmat_uploader/Presentation/notifications/views/send_bulk_notification_v.dart';
+import 'package:moatmat_uploader/Presentation/notifications2/views/send_bulk_notification_v.dart';
 
 import '../../../Core/resources/sizes_resources.dart';
 import '../../../Core/widgets/fields/text_input_field.dart';

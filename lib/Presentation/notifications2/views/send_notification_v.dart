@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moatmat_uploader/Core/resources/sizes_resources.dart';
 import 'package:moatmat_uploader/Core/widgets/fields/elevated_button_widget.dart';
 import 'package:moatmat_uploader/Features/students/domain/entities/user_data.dart';
-import 'package:moatmat_uploader/Presentation/notifications/state/cubit/notifications_cubit.dart';
-import 'package:moatmat_uploader/Presentation/notifications/views/write_notification_v.dart';
+import 'package:moatmat_uploader/Presentation/notifications2/state/cubit/notifications_cubit.dart';
+import 'package:moatmat_uploader/Presentation/notifications2/views/write_notification_v.dart';
 
 class SendNotificationView extends StatefulWidget {
   const SendNotificationView({super.key, required this.userData});
