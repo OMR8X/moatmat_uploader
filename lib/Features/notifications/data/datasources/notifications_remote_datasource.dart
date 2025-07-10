@@ -105,7 +105,7 @@ class NotificationsRemoteDatasourceImpl
     if (!notification.isValid()) return unit;
 
     await _localNotificationsPlugin.show(
-      notification.id,
+      notification.id.hashCode,
       notification.title,
       notification.body,
       details ?? AppLocalNotificationsSettings.defaultNotificationsDetails(),
@@ -215,7 +215,9 @@ class NotificationsRemoteDatasourceImpl
 
       final response = await _supabase.from('notifications2').select().or(
             'and(type.eq.user,target_user_ids.cs.{$userId}),and(type.eq.topic,target_topics.cs.{${subscribedTopics.join(',')}})',
-          ) as List;
+          ).order('created_at', ascending: false)
+          
+          as List;
 
       return response.map((e) {
         return AppNotification.fromJson(e as Map<String, dynamic>);

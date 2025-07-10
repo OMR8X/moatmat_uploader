@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:moatmat_uploader/Features/notifications/data/datasources/notification_local_data_source.dart';
 import 'package:moatmat_uploader/Features/notifications/data/datasources/notifications_remote_datasource.dart';
 import 'package:moatmat_uploader/Features/notifications/data/repositories/notifications_repository_implements.dart';
 import 'package:moatmat_uploader/Features/notifications/domain/repositories/notifications_repository.dart';
@@ -12,6 +13,7 @@ import 'package:moatmat_uploader/Features/notifications/domain/usecases/get_devi
 import 'package:moatmat_uploader/Features/notifications/domain/usecases/get_notifications_usecase.dart';
 import 'package:moatmat_uploader/Features/notifications/domain/usecases/initialize_firebase_notifications_usecase.dart';
 import 'package:moatmat_uploader/Features/notifications/domain/usecases/initialize_local_notifications_usecase.dart';
+import 'package:moatmat_uploader/Features/notifications/domain/usecases/mark_notification_seen.dart';
 import 'package:moatmat_uploader/Features/notifications/domain/usecases/refresh_device_token_usecase.dart';
 import 'package:moatmat_uploader/Features/notifications/domain/usecases/register_device_token_usecase.dart';
 import 'package:moatmat_uploader/Features/notifications/domain/usecases/subscribe_to_topic_usecase.dart';
@@ -73,18 +75,26 @@ Future<void> injectUC() async {
   locator.registerLazySingleton(
     () => RegisterDeviceTokenUseCase(repository: locator()),
   );
+
+  locator.registerFactory<MarkNotificationSeenUseCase>(
+    () => MarkNotificationSeenUseCase(repository: locator()),
+  );
 }
 
 Future<void> injectRepo() async {
   locator.registerLazySingleton<NotificationsRepository>(
     () => NotificationsRepositoryImplements(
-        locator<NotificationsRemoteDatasource>()),
+        locator<NotificationsRemoteDatasource>(),
+        locator<NotificationLocalDataSource>()),
   );
 }
 
 Future<void> injectDS() async {
   locator.registerLazySingleton<NotificationsRemoteDatasource>(
     () => NotificationsRemoteDatasourceImpl(),
+  );
+  locator.registerLazySingleton<NotificationLocalDataSource>(
+    () => NotificationLocalDataSourceImpl(sharedPreferences: locator()),
   );
 }
 
@@ -101,6 +111,7 @@ Future<void> injectBlocs() async {
 
   locator.registerLazySingleton(() => NotificationsBloc(
         getNotificationsUsecase: locator(),
+        markNotificationSeen: locator(),
       ));
 }
 

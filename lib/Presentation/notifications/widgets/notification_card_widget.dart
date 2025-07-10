@@ -75,7 +75,7 @@ class NotificationCard extends StatelessWidget {
     } else if (minutes < 60) {
       timeText = 'منذ $minutes دقيقة${minutes > 10 ? '' : ''}';
     } else {
-      timeText = 'منذ ${timeago.format(notification.date, locale: 'ar')}';
+      timeText = ' ${timeago.format(notification.date, locale: 'ar')}';
     }
 
     return Container(

@@ -16,20 +16,21 @@ class SearchIconWidget extends StatelessWidget {
           ),
         );
       },
-      icon: const Stack(
-        children: [
-          Icon(
-            Icons.search,
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: CircleAvatar(
-              radius: 3,
-              backgroundColor: Colors.transparent,
-            ),
-          )
-        ],
-      ),
+      icon: const Icon(Icons.search),
+      // icon: const Stack(
+      //   children: [
+      //     Icon(
+      //       Icons.search,
+      //     ),
+      //     Align(
+      //       alignment: Alignment.topRight,
+      //       child: CircleAvatar(
+      //         radius: 3,
+      //         backgroundColor: Colors.transparent,
+      //       ),
+      //     )
+      //   ],
+      // ),
     );
   }
 }

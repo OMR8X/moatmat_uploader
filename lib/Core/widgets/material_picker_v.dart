@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:moatmat_uploader/Core/injection/app_inj.dart';
+import 'package:moatmat_uploader/Core/widgets/appbar/notifications_icon_w.dart';
 import 'package:moatmat_uploader/Core/widgets/toucheable_tile_widget.dart';
 import 'package:moatmat_uploader/Presentation/notifications/state/notifications_bloc/notifications_bloc.dart';
 import 'package:moatmat_uploader/Presentation/notifications/views/notifications_view.dart';
@@ -31,29 +32,7 @@ class _MaterialPickerViewState extends State<MaterialPickerView> {
       appBar: AppBar(
         title: const Text(AppBarTitles.materialPicker),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const NotificationsView(),
-                ),
-              );
-            },
-            icon: const Stack(
-              children: [
-                Icon(
-                  Icons.notifications,
-                ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: CircleAvatar(
-                    radius: 3,
-                    backgroundColor: Colors.transparent,
-                  ),
-                )
-              ],
-            ),
-          ),
+          NotificationsIconWidget(),
           if (widget.onSearch != null)
             SearchIconWidget(
               onSearch: widget.onSearch!,

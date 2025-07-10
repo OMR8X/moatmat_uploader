@@ -65,7 +65,7 @@ void main() async {
         BlocProvider(create: (context) => QuestionsPickerCubit()),
         BlocProvider(create: (context) => AddToFolderCubit()),
         BlocProvider(create: (context) => PickTeacherItemCubit()),
-        BlocProvider(create: (context) => locator<NotificationsBloc>()),
+        BlocProvider(create: (context) => locator<NotificationsBloc>()..add(GetNotifications())),
       ],
       child: const AppRoot(),
     ),
