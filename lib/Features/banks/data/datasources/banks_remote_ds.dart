@@ -104,6 +104,7 @@ class BanksRemoteDSImpl implements BanksRemoteDS {
           material: newBank.information.material,
           id: newBank.id.toString(),
           path: video.url,
+            name: video.url.split('/').last,
         );
         //
         if (uploadRes.isLeft()) {
