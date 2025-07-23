@@ -1,4 +1,5 @@
 import '../../domain/entities/test/test_properties.dart';
+
 class TestPropertiesModel extends TestProperties {
   TestPropertiesModel({
     required super.exploreAnswers,
@@ -7,6 +8,7 @@ class TestPropertiesModel extends TestProperties {
     required super.repeatable,
     required super.visible,
     required super.scrollable,
+    required super.downloadable,
   });
   factory TestPropertiesModel.fromJson(Map json) {
     return TestPropertiesModel(
@@ -16,6 +18,7 @@ class TestPropertiesModel extends TestProperties {
       repeatable: json["repeatable"],
       visible: json["visible"],
       scrollable: json["scrollable"],
+      downloadable: json["downloadable"],
     );
   }
   factory TestPropertiesModel.fromClass(TestProperties properties) {
@@ -26,6 +29,7 @@ class TestPropertiesModel extends TestProperties {
       repeatable: properties.repeatable,
       visible: properties.visible,
       scrollable: properties.scrollable,
+      downloadable: properties.downloadable,
     );
   }
 
@@ -37,6 +41,7 @@ class TestPropertiesModel extends TestProperties {
       "repeatable": repeatable,
       "visible": visible,
       "scrollable": scrollable,
+      "downloadable": downloadable,
     };
   }
 }
