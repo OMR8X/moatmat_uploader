@@ -16,21 +16,17 @@ import '../../folders/view/add_item_to_folder_v.dart';
 class TestDetailsView extends StatefulWidget {
   const TestDetailsView({
     super.key,
-    this.test,
     this.testId,
   });
   final int? testId;
-  final Test? test;
   @override
   State<TestDetailsView> createState() => _TestDetailsViewState();
 }
 
 class _TestDetailsViewState extends State<TestDetailsView> {
-  late Test test;
   @override
   void initState() {
     context.read<TestInformationCubit>().init(
-          test: widget.test,
           testId: widget.testId,
         );
     super.initState();

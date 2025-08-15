@@ -48,7 +48,7 @@ class _MyTestsViewState extends State<MyTestsView> {
                   await Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => TestDetailsView(
-                        test: state.tests[i],
+                        testId: state.tests[i].id,
                       ),
                     ),
                   );

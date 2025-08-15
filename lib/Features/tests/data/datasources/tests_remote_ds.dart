@@ -211,6 +211,7 @@ class TestsRemoteDSImpl implements TestsRemoteDS {
           bucket: "tests",
           material: newTest.information.material,
           path: newTest.information.files![i],
+          name: newTest.information.files![i].split('/').last,
         );
         res.fold(
           (l) {},

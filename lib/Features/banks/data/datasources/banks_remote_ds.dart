@@ -104,7 +104,7 @@ class BanksRemoteDSImpl implements BanksRemoteDS {
           material: newBank.information.material,
           id: newBank.id.toString(),
           path: video.url,
-            name: video.url.split('/').last,
+          name: video.url.split('/').last,
         );
         //
         if (uploadRes.isLeft()) {
@@ -141,10 +141,10 @@ class BanksRemoteDSImpl implements BanksRemoteDS {
       }
       //
       final addedVideo = addedVideoRes.getOrElse(() => Video(
-        id: -1,
-        url: finalUrl,
-        teacherId: Supabase.instance.client.auth.currentUser!.id,
-      ));
+            id: -1,
+            url: finalUrl,
+            teacherId: Supabase.instance.client.auth.currentUser!.id,
+          ));
       //
       uploadedVideos.add(addedVideo);
     }
@@ -201,6 +201,7 @@ class BanksRemoteDSImpl implements BanksRemoteDS {
           bucket: "banks",
           material: newBank.information.material,
           path: newBank.information.files![i],
+          name: newBank.information.files![i].split('/').last,
         );
         res.fold(
           (l) => print(l),
